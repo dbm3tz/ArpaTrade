@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE xml>
+
+<project name="ArpaTrade" default="retrieve" xmlns:ivy="antlib:org.apache.ivy.ant"
+	basedir=".">
+
+	<property name="webinf.dir" value="${basedir}/WebContent/WEB-INF" />
+
+	<target name="resolve" description="Resolve dependencies with ivy">
+		<ivy:resolve />
+		<ivy:report todir='${basedir}/reports' graph='false' xml='false' />
+	</target>
+
+	<target name="retrieve" depends="resolve"
+		description="Populate corresponding directories">
+		<ivy:retrieve pattern="${basedir}/lib/[artifact]-[revision].[ext]"
+			conf="compile" />
+		<ivy:retrieve pattern="${webinf.dir}/lib/[artifact]-[revision].[ext]"
+			conf="runtime" />
+	</target>
+
+</project>
